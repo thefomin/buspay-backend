@@ -13,6 +13,10 @@ async function bootstrap() {
   app.set('trust proxy', true);
 
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
+  app.enableCors({
+    origin: config.getOrThrow<string>('ALLOWED_ORIGIN'),
+    credentials: true,
+  });
 
   const port = config.getOrThrow<number>('HTTP_PORT');
   const host = config.getOrThrow<string>('HTTP_HOST');
