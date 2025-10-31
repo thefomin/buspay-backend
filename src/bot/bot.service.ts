@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectBot } from 'nestjs-telegraf';
 import { Telegraf } from 'telegraf';
 
-import type { Ticket, Payment } from '@prisma/generated';
+import type { Ticket } from '../../prisma/generated';
 import { PaymentDto } from '@/api/payment/dto/payment-dto';
 
 @Injectable()
