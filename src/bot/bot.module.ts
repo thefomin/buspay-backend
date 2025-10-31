@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TelegrafModule } from 'nestjs-telegraf';
 
-import { getTelegrafConfig } from '@/config/telegraf.config';
+import { getTelegrafConfig } from '@/config';
 
 import { BotService } from './bot.service';
 
