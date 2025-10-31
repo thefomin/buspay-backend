@@ -1,4 +1,4 @@
-import { PrismaService } from '@/infra/prisma/prisma.service';
+import { PrismaService } from '../../infra/prisma/prisma.service';
 import { Injectable, NotFoundException } from '@nestjs/common';
 
 @Injectable()

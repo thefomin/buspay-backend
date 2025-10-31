@@ -3,8 +3,8 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { PrismaService } from '@/infra/prisma/prisma.service';
-import { BotService } from '@/bot/bot.service';
+import { PrismaService } from '../../infra/prisma/prisma.service';
+import { BotService } from '../../bot/bot.service';
 import { PaymentDto } from './dto/payment-dto';
 
 @Injectable()
