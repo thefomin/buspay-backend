@@ -10,7 +10,7 @@ import { PaymentDto } from './dto/payment-dto';
 @Injectable()
 export class PaymentService {
   constructor(
-    private readonly prisma: PrismaService,
+    private readonly prismaService: PrismaService,
     private readonly botService: BotService,
   ) {}
 
@@ -18,7 +18,7 @@ export class PaymentService {
     if (!dto.code) {
       throw new BadRequestException('Code не должен быть пустым');
     }
-    const ticket = await this.prisma.ticket.findUnique({
+    const ticket = await this.prismaService.ticket.findUnique({
       where: { code: dto.code },
     });
 
@@ -26,7 +26,7 @@ export class PaymentService {
       throw new NotFoundException(`Билет с кодом "${dto.code}" не найден`);
     }
 
-    const payment = await this.prisma.payment.create({
+    const payment = await this.prismaService.payment.create({
       data: {
         ticketId: ticket.id,
         telegramUser: dto.telegramUser,
@@ -34,8 +34,21 @@ export class PaymentService {
       },
     });
 
-    await this.botService.sendTicketPurchased(ticket, dto);
+    await this.botService.sendTicketPurchased(payment, ticket, dto);
 
     return payment;
+  }
+
+  public async getById(receiptId: string) {
+    const receipt = await this.prismaService.payment.findUnique({
+      where: { id: receiptId },
+      include: { ticket: true },
+    });
+
+    if (!receipt) {
+      throw new NotFoundException(`Такой квинтации не существует`);
+    }
+
+    return receipt;
   }
 }

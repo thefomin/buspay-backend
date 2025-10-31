@@ -10,4 +10,9 @@ export class PaymentController {
   public async payTicket(@Body() dto: PaymentDto) {
     return this.paymentService.payTicket(dto);
   }
+
+  @Get('receipt/:receiptId')
+  public async getById(@Param('receiptId') receiptId: string) {
+    return this.paymentService.getById(receiptId);
+  }
 }

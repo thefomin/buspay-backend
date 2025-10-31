@@ -2,14 +2,18 @@ import { Injectable } from '@nestjs/common';
 import { InjectBot } from 'nestjs-telegraf';
 import { Telegraf } from 'telegraf';
 
-import type { Ticket } from '../../prisma/generated';
+import type { Payment, Ticket } from '../../prisma/generated';
 import { PaymentDto } from '@/api/payment/dto/payment-dto';
 
 @Injectable()
 export class BotService {
   constructor(@InjectBot() private readonly bot: Telegraf) {}
 
-  public async sendTicketPurchased(ticket: Ticket, dto: PaymentDto) {
+  public async sendTicketPurchased(
+    payment: Payment,
+    ticket: Ticket,
+    dto: PaymentDto,
+  ) {
     const message =
       `🎟 <b>Билет успешно оплачен!</b>\n\n` +
       `🚌 Перевозчик: <b>${ticket.carrier}</b>\n` +
@@ -26,7 +30,7 @@ export class BotService {
             {
               text: '🧾 Посмотреть билет',
               web_app: {
-                url: `https://buspay-app.vercel.app/carrier/${ticket.code}`,
+                url: `https://buspay-app.vercel.app/receipt/${payment.id}`,
               },
             },
           ],
